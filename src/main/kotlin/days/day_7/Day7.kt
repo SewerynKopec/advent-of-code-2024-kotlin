@@ -1,6 +1,5 @@
 package org.example.days.day_7
 
-import com.sun.org.apache.xpath.internal.operations.Bool
 import org.example.days.DayTemplate
 
 class Day7: DayTemplate() {
@@ -20,17 +19,17 @@ class Day7: DayTemplate() {
         TODO("Not yet implemented")
     }
 
-    private fun getCalibrationEquations(content: List<String>): Map<Long, List<Long>> {
-        val equations = mutableMapOf<Long,List<Long>>()
+    private fun getCalibrationEquations(content: List<String>): List<Pair<Long, List<Long>>> {
+        val equations = mutableListOf<Pair<Long,List<Long>>>()
         content.forEach { row ->
             val result = row.split(": ").first().toLong()
             val numbers = row.split(": ").last().split(" ").map { it.toLong() }
-            equations[result] = numbers
+            equations.add(Pair(result, numbers))
         }
         return equations
     }
 
-    private fun sumValidEquations(equations: Map<Long, List<Long>>): Long {
+    private fun sumValidEquations(equations: List<Pair<Long, List<Long>>>): Long {
         val validEquations = equations.filter { (result, numbers) ->
             numbers.sum().also { sum ->
                 if (sum == result) return@filter true
@@ -38,7 +37,7 @@ class Day7: DayTemplate() {
             }
             return@filter isValid(result, numbers.first(), numbers.drop(1))
         }
-        return validEquations.keys.sum()
+        return validEquations.map { it.first }.sum()
     }
 
     private fun isValid(targetResult: Long, currentValue: Long, numbersLeft: List<Long>): Boolean {
