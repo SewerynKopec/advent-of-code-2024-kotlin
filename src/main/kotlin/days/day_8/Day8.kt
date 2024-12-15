@@ -44,6 +44,7 @@ class Day8: DayTemplate() {
         mapOfAntennas.forEach { _, singleTypeAntennas ->
             getAntinodeLocationsForSingleTypeAntennas(singleTypeAntennas, borders).also { locations ->
                 antinodeLocations.addAll(locations)
+                printAnntenasWithTheirAntinodes(singleTypeAntennas.toSet(), locations)
             }
         }
         return antinodeLocations
@@ -70,9 +71,9 @@ class Day8: DayTemplate() {
     }
 
     private fun checkIfInBorders(location: Pair<Int, Int>, borders: Pair<Int, Int>): Boolean {
-        if (location.first <= 0)
+        if (location.first < 0)
             return false
-        if (location.second <= 0)
+        if (location.second < 0)
             return false
         if (location.first >= borders.first)
             return false
@@ -98,5 +99,25 @@ class Day8: DayTemplate() {
             row.forEach { print(it) }
             print("\n")
         }
+        println()
+    }
+
+    private fun printAnntenasWithTheirAntinodes(antennas: Set<Pair<Int,Int>>, antinodes: Set<Pair<Int,Int>>) {
+        for(row in 0 until 50) {
+            for (col in 0 until 50) {
+                val coordinates = Pair(row, col)
+                if (coordinates in antennas && coordinates in antinodes)
+                    print("%")
+                else if (coordinates in antinodes)
+                    print("#")
+                else if (coordinates in antennas)
+                    print("a")
+                else print(".")
+            }
+            println()
+        }
+        println(antinodes.size)
+        println()
+        println()
     }
 }
