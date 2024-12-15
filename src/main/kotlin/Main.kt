@@ -1,6 +1,7 @@
 package org.example
 
 import org.example.days.day_1.Day1
+import org.example.days.day_10.Day10
 import org.example.days.day_2.Day2
 import org.example.days.day_3.Day3
 import org.example.days.day_4.Day4
@@ -25,5 +26,6 @@ fun main() {
 //    Day6().execute()
 //    Day7().execute()
 //    Day8().execute()
-    Day9().execute()
+//    Day9().execute()
+    Day10().execute()
 }
